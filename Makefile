@@ -1,13 +1,12 @@
-.DEFAULT_GOAL := compile-run
+.DEFAULT_GOAL := build-run
 
-compile-run: compile run
-
-compile: clean
-	mkdir -p ./target/classes
-	javac -d ./target/classes ./src/main/java/games/Slot.java
+build-run: build run
 
 run:
-	java -cp ./target/classes main.java.games.Slot
+	java -jar ./target/JavaPracticeProject-1.0-SNAPSHOT-jar-with-dependencies.jar
 
-clean:
-	rm -rf ./target
+build:
+	mvnw clean package
+
+update:
+	mvnw versions:display-plugin-updates

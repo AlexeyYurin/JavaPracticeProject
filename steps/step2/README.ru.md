@@ -33,7 +33,7 @@ build: compile
 
 Теперь проект можно запускать через jar-файл так:
 
-     $ java -cp ./target/{project-name}.jar games.Slot
+     $ java -cp ./target/{}.jar games.Slot
 
 Из-за изменений в командах надо откорректировать Makefile:
 
