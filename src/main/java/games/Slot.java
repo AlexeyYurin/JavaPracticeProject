@@ -24,7 +24,7 @@ import static java.lang.Math.*;
 * */
 
 public class Slot {
-    public static void main(String[] args) {
+    public static void main(String... args) {
         int yourMoney = 100;
         int rateOnSpin = 10;
         int size = 7;
