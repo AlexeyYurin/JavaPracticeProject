@@ -1,14 +1,13 @@
 package games;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import org.slf4j.Logger;
 
 import static games.CardUtils.*;
-import static games.Choice.getCharacterFromUser;
+import static java.lang.String.*;
 
 public class Drunkard {
+    private static final Logger logger = org.slf4j.LoggerFactory.getLogger(Drunkard.class);
+    
     private static final int FIRST_PLAYER = 0;
     private static final int SECOND_PLAYER = 1;
 
@@ -19,37 +18,33 @@ public class Drunkard {
     private static int lastWinPlayer;
 
     public static void main(String... args) {
-        distributionOfCards();
+        distributionCards();
 
         while (!(playerCardsIsEmpty(FIRST_PLAYER)&&!(playerCardsIsEmpty(SECOND_PLAYER)))) {
             var firstPlayerCard = getTopCard(FIRST_PLAYER);
             var secondPlayerCard = getTopCard(SECOND_PLAYER);
-            System.out.println("Итерация №" + countIteration + "; игрок №1 карта: " + CardUtils.toString(firstPlayerCard) +
-                               "; игрок №2 карта: " + CardUtils.toString(secondPlayerCard) + ".");
+            logger.info(format("Итерация №%d; игрок №1 карта: %s; игрок №2 карта: %s.",
+                    countIteration, CardUtils.toString(firstPlayerCard), CardUtils.toString(secondPlayerCard)));
             int compareCards = compare(getPar(firstPlayerCard), (getPar(secondPlayerCard)));
             if (compareCards > 0) {
-                //добавляем карты первому игроку
-                System.out.println("Выиграл игрок 1!");
+                logger.info("Выиграл игрок 1!");
                 lastWinPlayer = FIRST_PLAYER;
                 addCard(FIRST_PLAYER, firstPlayerCard);
                 addCard(FIRST_PLAYER, secondPlayerCard);
             } else if (compareCards < 0) {
-                //добавляем карты второму игроку
-                System.out.println("Выиграл игрок 2!");
+                logger.info("Выиграл игрок 2!");
                 lastWinPlayer = SECOND_PLAYER;
                 addCard(SECOND_PLAYER, firstPlayerCard);
                 addCard(SECOND_PLAYER, secondPlayerCard);
             } else {
-                //добавляем карты и первому и второму игроку
-                System.out.println("Ничья!");
+                logger.info("Ничья!");
                 addCard(FIRST_PLAYER, firstPlayerCard);
                 addCard(SECOND_PLAYER, secondPlayerCard);
             }
             countIteration++;
         }
 
-        System.out.println("Игры выиграл игрок №" + (lastWinPlayer + 1));
-
+        logger.info(format("Игры выиграл игрок №%d", lastWinPlayer + 1));
     }
 
     private static int getTopCard(int playerIndex) {
@@ -75,7 +70,7 @@ public class Drunkard {
         return tail == head;
     }
 
-    private static void distributionOfCards() {
+    private static void distributionCards() {
         createCards();
         shuffleCards();
 
